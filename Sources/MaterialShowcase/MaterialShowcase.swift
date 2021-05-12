@@ -19,12 +19,13 @@ open class MaterialShowcase: UIView {
     case full//full screen
   }
 
-  @objc public enum SkipButtonStyle: Int {
+  @objc public enum ButtonStyle: Int {
     case image
     case text
+    case textBoxed
   }
 
-  @objc public enum SkipButtonPosition: Int {
+  @objc public enum ButtonPosition: Int {
     case topRight
     case topLeft
     case bottomLeft
@@ -61,6 +62,7 @@ open class MaterialShowcase: UIView {
   
   // MARK: Private view properties
   var closeButton : UIButton!
+  var nextButton : UIButton!
   
   var containerView: UIView!
   var targetView: UIView!
@@ -72,12 +74,13 @@ open class MaterialShowcase: UIView {
   var instructionView: MaterialShowcaseInstructionView!
   
   public var skipButton: (() -> Void)?
+  public var nextButtonHandler: (() -> Void)?
   var onTapThrough: (() -> Void)?
   
   // MARK: Public Properties
   // Skip Button
-  private var skipButtonType: SkipButtonStyle = .image
-  public var skipButtonPosition: SkipButtonPosition = .topRight
+  public var skipButtonType: ButtonStyle = .textBoxed
+  public var skipButtonPosition: ButtonPosition = .bottomLeft
   public var skipButtonImage = "HintClose" {
     didSet {
       skipButtonType = .image
@@ -85,9 +88,14 @@ open class MaterialShowcase: UIView {
   }
   public var skipButtonTitle = "" {
     didSet {
-      skipButtonType = .text
+      skipButtonType = .textBoxed
     }
   }
+
+  // Next Button is near skip button
+  public var nextButtonType: ButtonStyle = .textBoxed
+  public var nextButtonImage = "HintClose"
+  public var nextButtonTitle = ""
 
   // Background
   @objc public var backgroundAlpha: CGFloat = 1.0
@@ -210,13 +218,17 @@ extension MaterialShowcase {
     // therefore, set its radius = 0
     targetHolderRadius = 0
   }
+
+  @objc func nextTutorialButtonDidTouch() {
+    nextButtonHandler?()
+  }
   
   @objc func dismissTutorialButtonDidTouch() {
     skipButton?()
   }
   
   /// Shows it over current screen after completing setup process
-  @objc public func show(animated: Bool = true,hasShadow: Bool = true, hasSkipButton: Bool = false, completion handler: (()-> Void)?) {
+  @objc public func show(animated: Bool = true,hasShadow: Bool = true, hasSkipButton: Bool = false, hasNextButton: Bool = false, completion handler: (()-> Void)?) {
     initViews()
     alpha = 0.0
     containerView.addSubview(self)
@@ -232,9 +244,11 @@ extension MaterialShowcase {
       
       closeButton = UIButton()
 
-      if skipButtonType == .text, !skipButtonTitle.isEmpty {
+      if skipButtonType == .text || skipButtonType == .textBoxed, !skipButtonTitle.isEmpty {
         closeButton.setTitle(skipButtonTitle, for: .normal)
-        closeButton.setBorderColor(primaryTextColor, width: SKIP_BUTTON_BORDER_WIDTH)
+        if skipButtonType == .textBoxed {
+          closeButton.setBorderColor(primaryTextColor, width: SKIP_BUTTON_BORDER_WIDTH)
+        }
         closeButton.setCornerRadius(SKIP_BUTTON_CORNER_RADIUS)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: SKIP_BUTTON_CONTENT_INSET, left: SKIP_BUTTON_CONTENT_INSET, bottom: SKIP_BUTTON_CONTENT_INSET, right: SKIP_BUTTON_CONTENT_INSET)
 
@@ -272,7 +286,31 @@ extension MaterialShowcase {
         // Fallback on earlier versions
       }
     }
-    
+
+    if hasNextButton {
+
+      nextButton = UIButton()
+
+      if nextButtonType == .text || nextButtonType == .textBoxed, !nextButtonTitle.isEmpty {
+        nextButton.setTitle(nextButtonTitle, for: .normal)
+        if nextButtonType == .textBoxed {
+          nextButton.setBorderColor(primaryTextColor, width: SKIP_BUTTON_BORDER_WIDTH)
+        }
+        nextButton.setCornerRadius(SKIP_BUTTON_CORNER_RADIUS)
+        nextButton.contentEdgeInsets = UIEdgeInsets(top: SKIP_BUTTON_CONTENT_INSET, left: SKIP_BUTTON_CONTENT_INSET, bottom: SKIP_BUTTON_CONTENT_INSET, right: SKIP_BUTTON_CONTENT_INSET)
+
+      } else {
+        nextButton.setImage(UIImage(named: nextButtonImage), for: .normal)
+      }
+
+      addSubview(nextButton!)
+      nextButton.addTarget(self, action: #selector(nextTutorialButtonDidTouch), for: .touchUpInside)
+      nextButton.translatesAutoresizingMaskIntoConstraints = false
+      setupNextButtonForEdges()
+      nextButton.topAnchor.constraint(equalTo: closeButton.topAnchor, constant: 0).isActive = true
+      nextButton.leftAnchor.constraint(equalTo: closeButton.rightAnchor, constant: 8).isActive = true
+    }
+
     if hasShadow {
       backgroundView.layer.shadowColor = UIColor.black.cgColor
       backgroundView.layer.shadowRadius = 5.0
@@ -661,6 +699,13 @@ extension MaterialShowcase {
   private func setupCloseButtonForEdges() {
     closeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.13).isActive = true
     closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor, multiplier: 1.0/1.0).isActive = true
+  }
+
+  /// Set constaint width, height for buttons
+  private func setupNextButtonForEdges() {
+    let sizeThatFits = nextButton.sizeThatFits(.zero)
+    nextButton.widthAnchor.constraint(equalToConstant: sizeThatFits.width).isActive = true
+    nextButton.heightAnchor.constraint(equalTo: closeButton.heightAnchor).isActive = true
   }
 }
 

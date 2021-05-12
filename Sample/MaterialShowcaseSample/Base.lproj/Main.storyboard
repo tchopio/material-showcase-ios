@@ -61,7 +61,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="8an-Rf-I8y">
-                                <rect key="frame" x="51" y="217" width="273" height="30"/>
+                                <rect key="frame" x="33" y="217" width="309" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Idg-HM-YqP" userLabel="Skip Button Image">
                                         <rect key="frame" x="0.0" y="0.0" width="126" height="30"/>
@@ -71,8 +71,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N5U-V4-u53" userLabel="Skip Button Title">
-                                        <rect key="frame" x="160" y="0.0" width="113" height="30"/>
-                                        <state key="normal" title="Skip Button Title"/>
+                                        <rect key="frame" x="160" y="0.0" width="149" height="30"/>
+                                        <state key="normal" title="Skip Next Button Title"/>
                                         <connections>
                                             <action selector="skipTitleButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yTD-qo-AqM"/>
                                         </connections>

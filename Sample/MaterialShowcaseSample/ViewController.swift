@@ -153,17 +153,25 @@ class ViewController: UIViewController {
     let showcase = MaterialShowcase()
     showcase.setTargetView(button: button, tapThrough: true)
     showcase.skipButtonPosition = .belowInstruction
-    showcase.skipButtonTitle = "Got it"
-    showcase.primaryText = "Action 4.1"
+    showcase.skipButtonTitle = "Skip"
+    showcase.primaryText = "Anything"
     showcase.secondaryText = "Click here to go into details"
     showcase.shouldSetTintColor = false // It should be set to false when button uses image.
     showcase.backgroundPromptColor = UIColor.blue
     showcase.isTapRecognizerForTargetView = true
     showcase.backgroundRadius = 400
+    showcase.skipButtonType = .text
     showcase.skipButton = {
       showcase.completeShowcase()
     }
-    showcase.show(hasSkipButton: true) {
+
+    showcase.nextButtonType = .textBoxed
+    showcase.nextButtonTitle = "Next"
+    showcase.nextButtonHandler = {
+        print("next >>>")
+    }
+
+    showcase.show(hasSkipButton: true, hasNextButton: true) {
       print("==== completion Action 4 ====")
       // You can save showcase state here
     }
