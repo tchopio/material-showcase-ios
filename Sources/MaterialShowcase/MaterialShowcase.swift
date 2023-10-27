@@ -89,6 +89,9 @@ open class MaterialShowcase: UIView {
     }
   }
 
+  /// tchop custom: move primaryLabel and secondaryLabel upd and down a bit, be careful and check results
+  @objc public var labelsVerticalOffset: CGFloat = 0
+    
   // Background
   @objc public var backgroundAlpha: CGFloat = 1.0
   @objc public var backgroundPromptColor: UIColor!
@@ -516,6 +519,8 @@ extension MaterialShowcase {
   /// Configures and adds primary label view
   private func addInstructionView(at center: CGPoint) {
     instructionView = MaterialShowcaseInstructionView()
+      
+    instructionView.labelsVerticalOffset = self.labelsVerticalOffset // aok custom
     
     instructionView.primaryTextAlignment = primaryTextAlignment
     instructionView.primaryTextFont = primaryTextFont
