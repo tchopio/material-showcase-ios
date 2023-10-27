@@ -20,6 +20,9 @@ public class MaterialShowcaseInstructionView: UIView {
   
   public var primaryLabel: UILabel!
   public var secondaryLabel: UILabel!
+    
+  /// tchop custom: move primaryLabel and secondaryLabel upd and down a bit, be careful and check results
+  public var labelsVerticalOffset: CGFloat = 0
   
   // Text
   public var primaryText: String!
@@ -79,7 +82,7 @@ public class MaterialShowcaseInstructionView: UIView {
     primaryLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
     primaryLabel.text = primaryText
     primaryLabel.frame = CGRect(x: 0,
-                                y: 0,
+                                y: self.labelsVerticalOffset, //0,
                                 width: frame.width,
                                 height: 0)
 
@@ -106,12 +109,12 @@ public class MaterialShowcaseInstructionView: UIView {
     secondaryLabel.numberOfLines = 0
     
     secondaryLabel.frame = CGRect(x: 0,
-                                  y: primaryLabel.frame.height,
+                                  y: primaryLabel.frame.height + self.labelsVerticalOffset,
                                   width: frame.width,
                                   height: 0)
     secondaryLabel.sizeToFitHeight()
     addSubview(secondaryLabel)
-    frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: primaryLabel.frame.height + secondaryLabel.frame.height)
+    frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: primaryLabel.frame.height + secondaryLabel.frame.height + abs(self.labelsVerticalOffset))
   }
   
   
