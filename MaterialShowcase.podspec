@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'MaterialShowcase'
-s.version          = '0.8.0'
+s.version          = '0.8.3'
 s.summary          = 'An elegant and beautiful showcase for iOS apps.'
 
 s.description      = <<-DESC
@@ -10,7 +10,7 @@ DESC
 s.homepage         = 'https://github.com/aromajoin/material-showcase-ios'
 s.license          = { :type => 'APACHE', :file => 'LICENSE' }
 s.author           = { 'Quang Nguyen' => 'quangnguyen@aromajoin.com' }
-s.source           = { :git => 'https://github.com/aromajoin/material-showcase-ios.git', :tag => s.version.to_s }
+s.source           = { :git => 'git@github.com:tchopio/material-showcase-ios.git', :branch => 'aokCustomization' }
 
 s.swift_version = '5.0'
 s.ios.deployment_target = '10.0'

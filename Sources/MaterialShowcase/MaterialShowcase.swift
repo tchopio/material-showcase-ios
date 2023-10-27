@@ -69,7 +69,7 @@ open class MaterialShowcase: UIView {
   var hiddenTargetHolderView: UIView!
   var targetRippleView: UIView!
   var targetCopyView: UIView!
-  var instructionView: MaterialShowcaseInstructionView!
+  public var instructionView: MaterialShowcaseInstructionView!
   
   public var skipButton: (() -> Void)?
   var onTapThrough: (() -> Void)?
