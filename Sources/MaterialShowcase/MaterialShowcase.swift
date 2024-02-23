@@ -71,7 +71,7 @@ open class MaterialShowcase: UIView {
   var hiddenTargetHolderView: UIView!
   var targetRippleView: UIView!
   var targetCopyView: UIView!
-  var instructionView: MaterialShowcaseInstructionView!
+  public var instructionView: MaterialShowcaseInstructionView!
   
   public var skipButton: (() -> Void)?
   public var nextButtonHandler: (() -> Void)?
@@ -91,11 +91,14 @@ open class MaterialShowcase: UIView {
       skipButtonType = .textBoxed
     }
   }
-
+  
   // Next Button is near skip button
   public var nextButtonType: ButtonStyle = .textBoxed
   public var nextButtonImage = "HintClose"
   public var nextButtonTitle = ""
+
+  /// tchop custom: move primaryLabel and secondaryLabel upd and down a bit, be careful and check results
+  @objc public var labelsVerticalOffset: CGFloat = 0
 
   // Background
   @objc public var backgroundAlpha: CGFloat = 1.0
@@ -554,6 +557,8 @@ extension MaterialShowcase {
   /// Configures and adds primary label view
   private func addInstructionView(at center: CGPoint) {
     instructionView = MaterialShowcaseInstructionView()
+      
+    instructionView.labelsVerticalOffset = self.labelsVerticalOffset // aok custom
     
     instructionView.primaryTextAlignment = primaryTextAlignment
     instructionView.primaryTextFont = primaryTextFont
