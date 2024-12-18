@@ -619,6 +619,13 @@ extension MaterialShowcase {
       width = containerView.frame.size.width - (xPosition*2)
       if backgroundView.frame.center.x - targetHolderRadius < 0 {
         width = width - abs(backgroundView.frame.origin.x)
+          
+        // tchop customisation edge case: when presented at dashboard button (hude circle with big targetHolderRadius but on the left edge)
+        if width < 100, backgroundView.frame.width > self.frame.width {
+            width = self.frame.width - 2 * xPosition
+        }
+        // tchop customisation end
+          
       } else if (backgroundView.frame.center.x + targetHolderRadius >
         UIScreen.main.bounds.width) {
         width = width - abs(backgroundView.frame.origin.x)
